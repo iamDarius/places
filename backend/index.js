@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const HttpError = require('./models/http-error');
 
 const placesRoutes = require('./routes/places-routes');
 
@@ -7,8 +8,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// registers middleware
 app.use('/api/places', placesRoutes);
+
+// throw for unsupported routes
+app.use((request, response, next) => {
+    const error = new HttpError('Could not find this route.', 404);
+    throw error;
+})
 
 // middleware func that will apply to every incoming req
 app.use((error, request, response, next) => {
