@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/api/places', placesRoutes);
+app.use('api/users');
 
 // throw for unsupported routes
 app.use((request, response, next) => {
