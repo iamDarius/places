@@ -1,5 +1,6 @@
 const HttpError = require("../models/http-error");
 const {v4: uuidv4 } = require("uuid");
+const { validationResult } = require('express-validator');
 
 let DUMMY_PLACES = [
   {
@@ -38,6 +39,12 @@ const getPlacesByUserId = (request, response) => {
 };
 
 const createPlace = (request, response) => {
+  const errors = validationResult(request);
+
+  if (!errors.isEmpty()) {
+    throw new HttpError('Whoops. There seems to be some invalid values. Please check your data', 422);
+  }
+
   const { title, description, coordinates, address, creator } = request.body;
   const createdPlace = {
     id: uuidv4(),
@@ -53,6 +60,12 @@ const createPlace = (request, response) => {
 };
 
 const updatePlace = (request, response, next) => {
+  const errors = validationResult(request);
+
+  if (!errors.isEmpty()) {
+    throw new HttpError('Whoops. There seems to be some invalid values. Please check your data', 422);
+  }
+  
   const { title, description } = request.body;
   const id = request.params.id;
 

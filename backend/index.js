@@ -3,13 +3,14 @@ const bodyParser = require('body-parser');
 const HttpError = require('./models/http-error');
 
 const placesRoutes = require('./routes/places-routes');
+const userRoutes = require('./routes/users-routes');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use('/api/places', placesRoutes);
-app.use('api/users');
+app.use('api/users', userRoutes);
 
 // throw for unsupported routes
 app.use((request, response, next) => {
