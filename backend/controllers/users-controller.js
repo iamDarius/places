@@ -18,6 +18,12 @@ const getAllUsers = (request, response, next) => {
 const createNewUser = (request, response, next) => {
     const { name, email, password } = request.body;
 
+    const userAlreadyExists = DUMMY_USERS.find(user => user.email === email);
+
+    if (userAlreadyExists) {
+        throw new HttpError('Could not create user. Email already exists.', 422);
+    }
+
     const newUser = {
         id: uuidv4(),
         name,
