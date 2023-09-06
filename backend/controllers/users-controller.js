@@ -1,5 +1,6 @@
 const HttpError = require("../models/http-error");
 const {v4: uuidv4 } = require("uuid");
+const { validationResult } = require('express-validator');
 
 const DUMMY_USERS = [
     {
@@ -16,6 +17,11 @@ const getAllUsers = (request, response, next) => {
 };
 
 const createNewUser = (request, response, next) => {
+    const errors = validationResult(request);
+
+    if(!errors.isEmpty()) {
+        throw new HttpError('Please make sure you have a valid email and password.', 422);
+    }
     const { name, email, password } = request.body;
 
     const userAlreadyExists = DUMMY_USERS.find(user => user.email === email);
