@@ -9,7 +9,7 @@ const UsersList = props => {
         </div>
     }
 
-    return <ul>
+    return <ul className="users-lists">
         {props.items.map(user => {
             return (
                 <UsersItem 
