@@ -65,7 +65,7 @@ const updatePlace = (request, response, next) => {
   if (!errors.isEmpty()) {
     throw new HttpError('Whoops. There seems to be some invalid values. Please check your data', 422);
   }
-  
+
   const { title, description } = request.body;
   const id = request.params.id;
 
@@ -83,6 +83,11 @@ const updatePlace = (request, response, next) => {
 };
 const deletePlace = (request, response, next) => {
   const id = request.params.id;
+  const placeFound = DUMMY_PLACES.find(place => place.id === id);
+
+  if (!placeFound) {
+    throw new HttpError('Could not find a place', 404);
+  }
   DUMMY_PLACES = DUMMY_PLACES.filter((place) => place.id !== id);
 
   response.status(200).json({ message: "Delete successful" });
