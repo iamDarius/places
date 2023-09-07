@@ -1,7 +1,12 @@
 import React from 'react';
-
-function App() {
-  return <h1>Let's start!</h1>;
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Users from './users/pages/User';
+const App = () => {
+    return <Router>
+        <Route path="/">
+            <Users />
+        </Route>
+    </Router>;
 }
 
 export default App;
