@@ -15,8 +15,8 @@ const UsersList = props => {
                 <UsersItem 
                 key={user.id} 
                 id={user.id} 
-                imageSrc={user.image} 
-                placeCount={user.places.length} 
+                image={user.image} 
+                placeCount={user.places} 
             />
             )
         })}
